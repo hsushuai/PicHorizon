@@ -1,0 +1,94 @@
+/* styles.css */
+
+body {
+    display: flex;
+}
+
+:root {
+    --color-brand-primary: #009191;
+    --color-brand-accent: #32A5A5;
+}
+
+.mdui-color-theme {
+    background-color: var(--color-brand-primary);
+    color: #fff;
+}
+
+.main-btn:hover {
+    background-color: var(--color-brand-accent);
+}
+
+.side-bar {
+    position: fixed;
+    height: 100vh;
+}
+
+.main-content {
+    flex: 1;
+    padding-left: 20%;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+}
+
+.image-container {
+    position: relative;
+    width: 70%; /* 调整容器的宽度 */
+}
+
+.image, .blur-image {
+    display: block;
+    width: 100%;
+    height: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.blur-image {
+    filter: blur(80px);
+    z-index: -1;
+    margin-left: 10%;
+    margin-top: 100px;
+    width: 105%;
+}
+
+.image-item {
+    width: 80%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    align-content: center;
+}
+
+.mdui-textfield-floating-label.mdui-textfield-focus .mdui-textfield-label {
+    color: var(--color-brand-primary);
+}
+
+.mdui-textfield-focus .mdui-textfield-input, .mdui-textfield-focus .mdui-textfield-input:hover {
+    border-bottom-color: var(--color-brand-primary);
+    -webkit-box-shadow: var(--color-brand-primary);
+    box-shadow: var(--color-brand-primary);
+}
+
+.mdui-panel-item-header {
+    padding: 0;
+}
+
+.logo-grid-item {
+
+}
+
+.mdui-progress-indeterminate {
+    background-color: #009191;
+}
+
+.mdui-progress {
+    background-color: #DCF4F3;
+}
+
+.mdui-snackbar {
+    background-color: #009191;
+}
+

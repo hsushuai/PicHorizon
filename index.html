@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/mdui@1.0.2/dist/css/mdui.min.css"/>
+    <link rel="stylesheet" href="styles.css">
+    <title>PicHorizon - Take Your Photos Over the Horizon</title>
+</head>
+<body class="mdui-appbar-with-toolbar mdui-loaded"> <!--mdui-theme-layout-auto-->
+<header class="appbar mdui-appbar mdui-appbar-fixed mdui-shadow-0">
+    <div class="mdui-toolbar mdui-shadow-0" style="backdrop-filter: blur(40px)">
+        <a class="mdui-typo-headline mdui-hidden-xs" style="color: #009191; font-weight: 900; font-style: italic;">PicHorizon</a>
+        <div class="mdui-toolbar-spacer"></div>
+        <button class="mdui-btn mdui-btn-icon mdui-ripple" mdui-tooltip="{content: 'Bilibili'}">
+            <i class="mdui-icon material-icons">video_library</i>
+        </button>
+        <a href="https://github.com/hsushuai" target="_blank"
+           class="mdui-btn mdui-btn-icon mdui-ripple mdui-ripple-white" mdui-tooltip="{content: 'Github'}">
+            <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+                 xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 36 36"
+                 enable-background="new 0 0 36 36" xml:space="preserve" class="mdui-icon"
+                 style="width: 24px;height:24px;">
+                <path fill-rule="evenodd" clip-rule="evenodd"
+                      d="M18,1.4C9,1.4,1.7,8.7,1.7,17.7c0,7.2,4.7,13.3,11.1,15.5c0.8,0.1,1.1-0.4,1.1-0.8c0-0.4,0-1.4,0-2.8c-4.5,1-5.5-2.2-5.5-2.2c-0.7-1.9-1.8-2.4-1.8-2.4c-1.5-1,0.1-1,0.1-1c1.6,0.1,2.5,1.7,2.5,1.7c1.5,2.5,3.8,1.8,4.7,1.4c0.1-1.1,0.6-1.8,1-2.2c-3.6-0.4-7.4-1.8-7.4-8.1c0-1.8,0.6-3.2,1.7-4.4c-0.2-0.4-0.7-2.1,0.2-4.3c0,0,1.4-0.4,4.5,1.7c1.3-0.4,2.7-0.5,4.1-0.5c1.4,0,2.8,0.2,4.1,0.5c3.1-2.1,4.5-1.7,4.5-1.7c0.9,2.2,0.3,3.9,0.2,4.3c1,1.1,1.7,2.6,1.7,4.4c0,6.3-3.8,7.6-7.4,8c0.6,0.5,1.1,1.5,1.1,3c0,2.2,0,3.9,0,4.5c0,0.4,0.3,0.9,1.1,0.8c6.5-2.2,11.1-8.3,11.1-15.5C34.3,8.7,27,1.4,18,1.4z"></path>
+            </svg>
+        </a>
+        <button class="mdui-btn mdui-btn-icon mdui-ripple" mdui-tooltip="{content: 'About'}">
+            <i class="mdui-icon material-icons">info</i>
+        </button>
+    </div>
+</header>
+
+<div class="mdui-container-fluid" style="width: 100%">
+    <div class="mdui-row mdui-row-gapless">
+        <div class="mdui-col-md-2 mdui-hidden-sm-down">
+            <div class="mdui-row mdui-valign" style="height: 100px">
+                <button class="mdui-btn main-btn mdui-ripple mdui-color-theme mdui-center" id="importBtn">
+                    <label>IMPORT</label>
+                    <input type="file" id="fileInput" multiple accept="image/*" style="display: none">
+                </button>
+            </div>
+            <div class="mdui-list" style="width: 100%;" id="imageList"></div>
+        </div>
+        <div class="mdui-col-md-7">
+            <div class="mdui-container" style="height: 3px;visibility: hidden;" id="progressContainer">
+                <div class="mdui-progress mdui-center" style="width: 80%;margin-top: 80px;">
+                    <div class="mdui-progress-indeterminate" style="width: 0" id="progress"></div>
+                </div>
+            </div>
+            <div class="mdui-container" id="importYourAwesomePhotos">
+                <img class="mdui-center" src="assets/Import your Awesome Photos.png" style="width: 80%">
+            </div>
+            <div class="mdui-container" style="position: relative;">
+                <canvas class="mdui-center" id="myCanvas" style="width: 80%"></canvas>
+                <img class="blur-image" id="blurImage" style="width: 80%"/>
+            </div>
+        </div>
+        <div class="mdui-col-md-3">
+            <div class="mdui-container" style="margin-top: 80px">
+                <div class="mdui-textfield mdui-textfield-floating-label">
+                    <label class="mdui-textfield-label">Camera</label>
+                    <input class="mdui-textfield-input" id="cameraInput"/>
+                </div>
+            </div>
+            <div class="mdui-container" style="margin-top: 50px">
+                <div class="mdui-textfield mdui-textfield-floating-label">
+                    <label class="mdui-textfield-label">Date Time</label>
+                    <input class="mdui-textfield-input" id="dateTimeInput"/>
+                </div>
+            </div>
+            <div class="mdui-container" style="margin-top: 50px">
+                <div class="mdui-textfield mdui-textfield-floating-label">
+                    <label class="mdui-textfield-label">Shooting Param</label>
+                    <input class="mdui-textfield-input" id="shootingParamInput"/>
+                </div>
+            </div>
+            <div class="mdui-container" style="margin-top: 50px">
+                <div class="mdui-textfield mdui-textfield-floating-label">
+                    <label class="mdui-textfield-label">Artist</label>
+                    <input class="mdui-textfield-input" id="artistInput"/>
+                </div>
+            </div>
+
+            <div class="mdui-container" style="margin-top: 50px">
+                <div class="mdui-panel" mdui-panel>
+                    <div class="mdui-panel-item mdui-shadow-0" style="background-color: transparent">
+                        <div class="mdui-panel-item-header">
+                            <div class="mdui-panel-item-title">Choose a logo</div>
+                            <div class="mdui-panel-item-summary">Nikon</div>
+                            <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+                        </div>
+                        <div class="mdui-panel-item-body">
+                            <div class="mdui-container">
+                                <div class="mdui-row-xs-6 mdui-grid-list">
+                                    <div class="mdui-col">
+                                        <div class="mdui-grid-tile">
+                                            <img src="logos/canon-3.png"/>
+                                        </div>
+                                    </div>
+                                    <div class="mdui-col">
+                                        <div class="mdui-grid-tile">
+                                            <img src="logos/nikon-1.png"/>
+                                        </div>
+                                    </div>
+                                    <div class="mdui-col">
+                                        <div class="mdui-grid-tile">
+                                            <img src="logos/nikon-2.jpg"/>
+                                        </div>
+                                    </div>
+                                    <div class="mdui-col">
+                                        <div class="mdui-grid-tile">
+                                            <img src="logos/canon-1.png"/>
+                                        </div>
+                                    </div>
+                                    <div class="mdui-col">
+                                        <div class="mdui-grid-tile">
+                                            <img src="logos/canon-2.png"/>
+                                        </div>
+                                    </div>
+                                    <div class="mdui-col">
+                                        <div class="mdui-grid-tile">
+                                            <img src="logos/nikon-3.jpg"/>
+                                        </div>
+                                    </div>
+                                    <div class="mdui-col">
+                                        <div class="mdui-grid-tile">
+                                            <img src="logos/samsung-1.png"/>
+                                        </div>
+                                    </div>
+                                    <div class="mdui-col">
+                                        <div class="mdui-grid-tile">
+                                            <img src="logos/samsung-2.png"/>
+                                        </div>
+                                    </div>
+                                    <div class="mdui-col">
+                                        <div class="mdui-grid-tile">
+                                            <img src="logos/samsung-3.jpg"/>
+                                        </div>
+                                    </div>
+                                    <div class="mdui-col">
+                                        <div class="mdui-grid-tile">
+                                            <img src="logos/apple-2.png"/>
+                                        </div>
+                                    </div>
+                                    <div class="mdui-col">
+                                        <div class="mdui-grid-tile">
+                                            <img src="logos/apple-3.png"/>
+                                        </div>
+                                    </div>
+                                    <div class="mdui-col">
+                                        <div class="mdui-grid-tile">
+                                            <img src="logos/huawei-1.jpg"/>
+                                        </div>
+                                    </div>
+                                    <div class="mdui-col">
+                                        <div class="mdui-grid-tile">
+                                            <img src="logos/huawei-2.png"/>
+                                        </div>
+                                    </div>
+                                    <div class="mdui-col">
+                                        <div class="mdui-grid-tile">
+                                            <img src="logos/fujifilm-1.png"/>
+                                        </div>
+                                    </div>
+                                    <div class="mdui-col">
+                                        <div class="mdui-grid-tile">
+                                            <img src="logos/panasonic-1.png"/>
+                                        </div>
+                                    </div>
+                                    <div class="mdui-col">
+                                        <div class="mdui-grid-tile">
+                                            <img src="logos/apple-1.png"/>
+                                        </div>
+                                    </div>
+                                    <div class="mdui-col">
+                                        <div class="mdui-grid-tile">
+                                            <img src="logos/xiaomi-1.jpg"/>
+                                        </div>
+                                    </div>
+                                    <div class="mdui-col">
+                                        <div class="mdui-grid-tile">
+                                            <img src="logos/xiaomi-2.jpg"/>
+                                        </div>
+                                    </div>
+                                    <div class="mdui-col">
+                                        <div class="mdui-grid-tile">
+                                            <img src="logos/leica-2.png"/>
+                                        </div>
+                                    </div>
+                                    <div class="mdui-col">
+                                        <div class="mdui-grid-tile">
+                                            <img src="logos/leica-1.png"/>
+                                        </div>
+                                    </div>
+                                    <div class="mdui-col">
+                                        <div class="mdui-grid-tile">
+                                            <img src="logos/hasselblad-1.png"/>
+                                        </div>
+                                    </div>
+                                    <div class="mdui-col">
+                                        <div class="mdui-grid-tile">
+                                            <img src="logos/hasselblad-2.png"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mdui-panel-item-actions">
+                                    <button class="mdui-btn mdui-ripple">Upload logos</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mdui-container" style="margin-top: 50px">
+                <button class="mdui-btn mdui-btn-icon mdui-ripple" mdui-tooltip="{content: 'Delete', delay: 500}"
+                        id="delBtn">
+                    <i class="mdui-icon material-icons">delete</i>
+                </button>
+                <button class="mdui-btn mdui-btn-icon mdui-ripple" mdui-tooltip="{content: 'Download', delay: 500}"
+                        id="downloadBtn">
+                    <i class="mdui-icon material-icons">file_download</i>
+                </button>
+                <button class="mdui-btn mdui-btn-icon mdui-ripple" mdui-tooltip="{content: 'Refresh', delay: 500}"
+                        id="updateBtn">
+                    <i class="mdui-icon material-icons">refresh</i>
+                </button>
+            </div>
+            <button class="mdui-btn mdui-ripple main-btn mdui-color-theme mdui-center"
+                    style="margin-top: 100px;margin-bottom: 100px" id="exportAllBtn">
+                <label>EXPORT ALL</label>
+            </button>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://unpkg.com/mdui@1.0.2/dist/js/mdui.min.js"></script>
+<script type="text/javascript" src="exif.js"></script>
+<script type="text/javascript" src="jszip.min.js"></script>
+<script type="module" src="script.js"></script>
+</body>
+</html>
